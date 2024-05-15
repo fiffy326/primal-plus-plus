@@ -1,4 +1,4 @@
-VERSION := 1.0.0
+VERSION := 1.0.1
 
 PROGRAM := primal
 MANPAGE := primal.1
@@ -19,7 +19,7 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 CFLAGS := $(INC_FLAGS) -MMD -MP -pipe -march=native -std=c99 -pedantic -Wall -Werror -Wextra -Ofast
 LDFLAGS := -lm -static
 
-CC := gcc
+CC := musl-gcc
 
 all: $(PROGRAM)
 
