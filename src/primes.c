@@ -136,7 +136,7 @@ uint_fast64_t parse_upper_limit(const char* buffer) {
     }
     if (!upper_limit) {
         fprintf(stderr, "Error: The upper limit provided was invalid or below "
-                "the maximum allowed value (min: %lu)\n", MIN_VALUE);
+                "the minimum allowed value (min: %lu)\n", MIN_VALUE);
         exit(EXIT_FAILURE);
     }
     return upper_limit;
