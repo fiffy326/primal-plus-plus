@@ -14,20 +14,20 @@ typedef uint_fast64_t U64;
 enum Primality { COMPOSITE = 0, PRIME = 1 };
 
 /* Constants */
-static const U64 MAX_DIGITS = 20;            // U64 max digits
-static const U64 MIN_VALUE = 1;              // Upper limit min value
-static const U64 MAX_VALUE = ULLONG_MAX - 1; // Upper limit max value 
+static const U64 MAX_DIGITS = 20;            // U64 max # of digits
+static const U64 MIN_VALUE = 1;              // Search ceiling min value
+static const U64 MAX_VALUE = ULLONG_MAX - 1; // Search ceiling max value 
 
 /* Functions */
-void find_primes(U64 cap);
-void find_primes_8(U8 cap);
-void find_primes_16(U16 cap);
-void find_primes_32(U32 cap);
-void find_primes_64(U64 cap);
+void find_primes(U64 search_ceiling);
+void find_primes_8(U8 search_ceiling);
+void find_primes_16(U16 search_ceiling);
+void find_primes_32(U32 search_ceiling);
+void find_primes_64(U64 search_ceiling);
 enum Primality is_prime_8(U8 n);
 enum Primality is_prime_16(U16 n);
 enum Primality is_prime_32(U32 n);
 enum Primality is_prime_64(U64 n);
-U64 parse_search_cap(const char* buffer);
+U64 parse_search_ceiling(const char* buffer);
 
 #endif
