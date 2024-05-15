@@ -4,22 +4,22 @@
 #include "primes.h"
 
 int main(int argc, char** argv) {
-    uint_fast64_t upper_limit;
+    U64 search_cap;
 
     if (argc > 1)
-        upper_limit = parse_upper_limit(argv[1]);
+        search_cap = parse_search_cap(argv[1]);
     else {
         printf("%s\n", ASCII_ART);
         printf("Minimum: %lu\n", MIN_VALUE);
         printf("Maximum: %lu\n\n", MAX_VALUE);
-        printf("Upper limit: ");
+        printf("Search cap: ");
 
         char buffer[MAX_DIGITS + 1];
         fgets(buffer, sizeof(buffer), stdin);
         printf("\n");
 
-        upper_limit = parse_upper_limit(buffer);
+        search_cap = parse_search_cap(buffer);
     }
-    find_primes(upper_limit);
+    find_primes(search_cap);
     return 0;
 }

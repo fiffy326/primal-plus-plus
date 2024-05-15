@@ -4,24 +4,30 @@
 #include <limits.h>
 #include <stdint.h>
 
-/* Constants */
-static const uint_fast64_t MAX_DIGITS = 20;            // uint64 max digits
-static const uint_fast64_t MIN_VALUE = 1;              // Upper limit min value
-static const uint_fast64_t MAX_VALUE = ULLONG_MAX - 1; // Upper limit max value 
+/* Typedefs */
+typedef uint_fast8_t U8;
+typedef uint_fast16_t U16;
+typedef uint_fast32_t U32;
+typedef uint_fast64_t U64;
 
 /* Enums */
 enum Primality { COMPOSITE = 0, PRIME = 1 };
 
+/* Constants */
+static const U64 MAX_DIGITS = 20;            // U64 max digits
+static const U64 MIN_VALUE = 1;              // Upper limit min value
+static const U64 MAX_VALUE = ULLONG_MAX - 1; // Upper limit max value 
+
 /* Functions */
-void find_primes(uint_fast64_t upper_limit);
-void find_primes_8(uint_fast8_t upper_limit);
-void find_primes_16(uint_fast16_t upper_limit);
-void find_primes_32(uint_fast32_t upper_limit);
-void find_primes_64(uint_fast64_t upper_limit);
-enum Primality is_prime_8(uint_fast8_t candidate);
-enum Primality is_prime_16(uint_fast16_t candidate);
-enum Primality is_prime_32(uint_fast32_t candidate);
-enum Primality is_prime_64(uint_fast64_t candidate);
-uint_fast64_t parse_upper_limit(const char* buffer);
+void find_primes(U64 cap);
+void find_primes_8(U8 cap);
+void find_primes_16(U16 cap);
+void find_primes_32(U32 cap);
+void find_primes_64(U64 cap);
+enum Primality is_prime_8(U8 n);
+enum Primality is_prime_16(U16 n);
+enum Primality is_prime_32(U32 n);
+enum Primality is_prime_64(U64 n);
+U64 parse_search_cap(const char* buffer);
 
 #endif
