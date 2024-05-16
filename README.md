@@ -2,7 +2,14 @@
 
 Searches for primes using trial division.
 
+## Preview
+
+![2024-05-16-180038](https://github.com/fiffy326/primal/assets/22841956/d5b3e13b-7d59-49c6-8f76-e003a482bb99)
+
+![2024-05-16-180140](https://github.com/fiffy326/primal/assets/22841956/a4b26357-7a0a-4ac6-9192-f1ba28073eec)
+
 ## Installation
+
 ```sh
 git clone https://github.com/fiffy326/primal
 cd primal
@@ -10,7 +17,7 @@ make
 sudo make install
 ```
 
-## Preview
-![2024-05-14-015627](https://github.com/fiffy326/primal/assets/22841956/66ada806-4e26-4e0d-9db7-0f13d6ec2bb5)
+## Dependencies
+Compilation is done with musl libc by default for performance reasons.
 
-![2024-05-14-015401](https://github.com/fiffy326/primal/assets/22841956/e870559a-fdc1-4080-8b2f-507137b9d60b)
+If you want to use glibc, clone that branch instead.
