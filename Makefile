@@ -16,10 +16,10 @@ DEPS := $(OBJS:.o=.d)
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
-LDFLAGS := 
 CPPFLAGS := $(INC_FLAGS) -MMD -MP
 CXXFLAGS := -pipe -march=native -std=c++23 -pedantic -Wall -Werror -Wextra -Ofast
 CFLAGS := -pipe -march=native -std=c17 -pedantic -Wall -Werror -Wextra -Ofast
+override LDFLAGS += 
 
 CC := clang
 CXX := clang++
