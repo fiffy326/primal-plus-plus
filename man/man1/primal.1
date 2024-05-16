@@ -1,25 +1,25 @@
 .TH PRIMAL 1 primal\-VERSION
 .SH NAME
-primal \- Searches for primes using trial division.
+primal \- Computes prime numbers using trial division
 .SH SYNOPSIS
 .B primal
 .RB [ \-? ]
-.RB [ \-n
-.IR number ]
-.RB [ \-i
-.IR index ]
 .RB [ \-c
 .IR ceiling ]
+.RB [ \-i
+.IR index ]
+.RB [ \-t
+.IR candidate ]
 .SH OPTIONS
 .TP
 .B \-?
 Show usage information
 .TP
-.B \-n
-Check whether a number is prime
+.B \-c
+Compute every prime below a given ceiling value
 .TP
 .B \-i
-Calculate the Nth prime number
+Compute the prime at a given index in the series
 .TP
-.B \-c
-List all primes below the search ceiling
+.B \-t
+Perform a primality test on a given candidate integer

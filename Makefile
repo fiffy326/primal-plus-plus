@@ -1,4 +1,4 @@
-VERSION := 1.0.2
+VERSION := 1.0.3
 
 PROGRAM := primal
 MANPAGE := $(PROGRAM).1
@@ -9,22 +9,27 @@ MANPREFIX := $(PREFIX)/share/man
 BUILD_DIR := ./build
 SRC_DIRS := ./src
 
-SRCS := $(shell find $(SRC_DIRS) -name '*.c')
+SRCS := $(shell find $(SRC_DIRS) -name '*.cpp' -or -name '*.c')
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
-CFLAGS := $(INC_FLAGS) -MMD -MP -pipe -march=native -std=c99 -pedantic -Wall -Werror -Wextra -Ofast
-LDFLAGS := -lm -static
+CPPFLAGS := $(INC_FLAGS) -MMD -MP -pipe -march=native -std=c++23 -pedantic -Wall -Werror -Wextra -Ofast
+LDFLAGS := 
 
-CC := musl-gcc
+CC := clang
+CXX := clang++
 
 all: $(PROGRAM)
 
 $(PROGRAM): $(OBJS)
-	$(CC) $(OBJS) -o $@ $(LDFLAGS)
+	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
+
+$(BUILD_DIR)/%.cpp.o: %.cpp
+	mkdir -p $(dir $@)
+	$(CXX) $(CPPFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.c.o: %.c
 	mkdir -p $(dir $@)
