@@ -29,3 +29,6 @@ Compilation is done with clang by default for performance reasons.
 You may also build with gcc if you prefer.
 
 The performance boost with clang is about 2.75x compared to gcc.
+
+
+Hyperfine is also required to use the `make benchmark` command.

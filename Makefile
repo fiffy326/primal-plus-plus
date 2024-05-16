@@ -17,8 +17,8 @@ INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 CPPFLAGS := $(INC_FLAGS) -MMD -MP
-CXXFLAGS := -pipe -std=c++23 -pedantic -Wall -Werror -Wextra -Ofast
-CFLAGS := -pipe -std=c17 -pedantic -Wall -Werror -Wextra -Ofast
+CXXFLAGS := -pipe -march=native -std=c++23 -pedantic -Wall -Werror -Wextra -Ofast
+CFLAGS := -pipe -march=native -std=c17 -pedantic -Wall -Werror -Wextra -Ofast
 override LDFLAGS += 
 
 CC := clang
