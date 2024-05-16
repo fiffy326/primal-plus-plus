@@ -7,7 +7,6 @@
 
 U64 parse_u64(const char* buffer, const char* name) {
     U64 value;
-
     if ((value = strtoull(buffer, NULL, 10)) > U64_MAX) {
         fprintf(stderr, "Error: The %s provided was above the maximum allowed "
                 "value (max: %lu)\n", name, U64_MAX);
@@ -34,19 +33,17 @@ U64 parse_index(const char* buffer) {
 }
 
 Mode parse_mode(const char* buffer) {
-    U8 mode_index;
-
-    if ((mode_index = (U8)atoi(buffer)) < sizeof(Mode))
-        return (Mode)mode_index;
-    else {
+    Mode mode = (Mode)(U8)atoi(buffer);
+    if ((mode > sizeof(Mode) - 1) || (mode == NONE)) {
         fprintf(stderr, "Error: Invalid mode\n");
         exit(EXIT_FAILURE);
     }
+    else
+        return mode;
 }
 
 U64 request_ceiling(void) {
     char buffer[BUFFER_SIZE];
-
     printf("Ceiling: ");
     fflush(stdout);
     fgets(buffer, sizeof(buffer), stdin);
@@ -56,7 +53,6 @@ U64 request_ceiling(void) {
 
 U64 request_number(void) {
     char buffer[BUFFER_SIZE];
-
     printf("Number: ");
     fflush(stdout);
     fgets(buffer, sizeof(buffer), stdin);
@@ -66,7 +62,6 @@ U64 request_number(void) {
 
 U64 request_index(void) {
     char buffer[BUFFER_SIZE];
-
     printf("Prime index: ");
     fflush(stdout);
     fgets(buffer, sizeof(buffer), stdin);
@@ -76,13 +71,11 @@ U64 request_index(void) {
 
 Mode request_mode(void) {
     char buffer[BUFFER_SIZE];
-
     printf("[1] = List primes below a ceiling\n");
     printf("[2] = Check if a number is prime\n");
     printf("[3] = Find the Nth prime\n");
-    printf("[0] = Exit\n");
-    printf("\n");
-    printf("> ");
+    printf("[0] = Exit\n\n");
+    printf("Mode: ");
     fflush(stdout);
     fgets(buffer, sizeof(buffer), stdin);
     printf("\n");
@@ -95,7 +88,6 @@ void parse_options(Options* options, int argc, char** argv) {
     options->ceiling = DEFAULT_CEILING;
     options->number = DEFAULT_NUMBER;
     options->index = DEFAULT_INDEX;
-
 
     // Add program name to usage message
     char* program_name = argv[0];
@@ -130,6 +122,7 @@ void parse_options(Options* options, int argc, char** argv) {
         }
     }
 
+    // Handle additional arguments
     U8 extra_args = argc - optind;
     if (extra_args > 0) {
         fprintf(stderr, "Error: Invalid arguments\n%s\n", usage_message);

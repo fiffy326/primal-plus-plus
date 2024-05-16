@@ -9,7 +9,6 @@
 
 void interactive_session(void) {
     printf("%s\n", ASCII_ART);
-
     switch (request_mode()) {
         case NONE:
             exit(EXIT_SUCCESS);
