@@ -1,6 +1,6 @@
 # Primal
 
-Computes prime numbers using trial divison.
+Computes prime numbers using trial division.
 
 ## Preview
 
@@ -11,13 +11,21 @@ Computes prime numbers using trial divison.
 ## Installation
 
 ```sh
-git clone https://github.com/fiffy326/primal -b cpp
-cd primal
+git clone https://github.com/fiffy326/primal++
+cd primal++
 make
 sudo make install
+
+# Other compilation options:
+make gcc
+make gcc-static
+make clang
+make clang-static
 ```
-
 ## Dependencies
-Compilation is done with clang++ by default for performance reasons.
 
-If you want to use glibc, clone that branch instead.
+Compilation is done with clang by default for performance reasons.
+
+You may also build with gcc if you prefer.
+
+The performance boost with clang is about 2.75x compared to gcc.
