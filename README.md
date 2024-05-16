@@ -1,4 +1,4 @@
-# Primal
+# Primal++
 
 Computes prime numbers using trial division.
 
@@ -11,8 +11,8 @@ Computes prime numbers using trial division.
 ## Installation
 
 ```sh
-git clone https://github.com/fiffy326/primal++
-cd primal++
+git clone https://github.com/fiffy326/primal-plus-plus
+cd primal-plus-plus
 make
 sudo make install
 
