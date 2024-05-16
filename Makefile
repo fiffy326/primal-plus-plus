@@ -1,6 +1,6 @@
-VERSION := 1.0.3
+VERSION := 1.0.0
 
-PROGRAM := primal
+PROGRAM := primal-plus-plus
 MANPAGE := $(PROGRAM).1
 
 PREFIX := /usr/local
