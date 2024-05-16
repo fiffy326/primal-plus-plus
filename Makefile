@@ -1,7 +1,7 @@
-VERSION := 1.0.1
+VERSION := 1.0.2
 
 PROGRAM := primal
-MANPAGE := primal.1
+MANPAGE := $(PROGRAM).1
 
 PREFIX := /usr/local
 MANPREFIX := $(PREFIX)/share/man

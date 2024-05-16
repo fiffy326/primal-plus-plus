@@ -6,7 +6,8 @@ Searches for primes using trial division.
 ```sh
 git clone https://github.com/fiffy326/primal
 cd primal
-make && sudo make install
+make
+sudo make install
 ```
 
 ## Preview
