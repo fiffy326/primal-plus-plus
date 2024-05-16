@@ -1,6 +1,6 @@
 # Primal
 
-Searches for primes using trial division.
+Computes prime numbers using trial divison.
 
 ## Preview
 
@@ -11,13 +11,13 @@ Searches for primes using trial division.
 ## Installation
 
 ```sh
-git clone https://github.com/fiffy326/primal
+git clone https://github.com/fiffy326/primal -b cpp
 cd primal
 make
 sudo make install
 ```
 
 ## Dependencies
-Compilation is done with musl libc by default for performance reasons.
+Compilation is done with clang++ by default for performance reasons.
 
 If you want to use glibc, clone that branch instead.
