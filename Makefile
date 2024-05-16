@@ -16,8 +16,10 @@ DEPS := $(OBJS:.o=.d)
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
-CPPFLAGS := $(INC_FLAGS) -MMD -MP -pipe -march=native -std=c++23 -pedantic -Wall -Werror -Wextra -Ofast
 LDFLAGS := 
+CPPFLAGS := $(INC_FLAGS) -MMD -MP
+CXXFLAGS := -pipe -march=native -std=c++23 -pedantic -Wall -Werror -Wextra -Ofast
+CFLAGS := -pipe -march=native -std=c17 -pedantic -Wall -Werror -Wextra -Ofast
 
 CC := clang
 CXX := clang++
@@ -29,11 +31,23 @@ $(PROGRAM): $(OBJS)
 
 $(BUILD_DIR)/%.cpp.o: %.cpp
 	mkdir -p $(dir $@)
-	$(CXX) $(CPPFLAGS) -c $< -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.c.o: %.c
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
+clang:
+	make CC=clang CXX=clang++
+
+clang-static:
+	make CC=clang CXX=clang++ LDFLAGS=-static
+
+gcc:
+	make CC=gcc CXX=g++
+
+gcc-static:
+	make CC=gcc CXX=g++ LDFLAGS=-static
 
 clean:
 	rm -rf $(BUILD_DIR)
@@ -50,6 +64,6 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/$(PROGRAM) \
 		$(DESTDIR)$(MANPREFIX)/man1/$(MANPAGE)
 
-.PHONY: all clean install uninstall
+.PHONY: all clean install uninstall clang clang-static gcc gcc-static
 
 -include $(DEPS)
