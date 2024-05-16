@@ -1,6 +1,6 @@
 VERSION := 1.0.0
 
-PROGRAM := primal-plus-plus
+PROGRAM := primal++
 MANPAGE := $(PROGRAM).1
 
 PREFIX := /usr/local
@@ -17,8 +17,8 @@ INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 CPPFLAGS := $(INC_FLAGS) -MMD -MP
-CXXFLAGS := -pipe -march=native -std=c++23 -pedantic -Wall -Werror -Wextra -Ofast
-CFLAGS := -pipe -march=native -std=c17 -pedantic -Wall -Werror -Wextra -Ofast
+CXXFLAGS := -pipe -std=c++23 -pedantic -Wall -Werror -Wextra -Ofast
+CFLAGS := -pipe -std=c17 -pedantic -Wall -Werror -Wextra -Ofast
 override LDFLAGS += 
 
 CC := clang
@@ -65,8 +65,11 @@ uninstall:
 		$(DESTDIR)$(MANPREFIX)/man1/$(MANPAGE)
 
 run:
-	$(PROGRAM)
+	./$(PROGRAM)
 
-.PHONY: all clean run install uninstall clang clang-static gcc gcc-static
+benchmark:
+	hyperfine --warmup 5 './$(PROGRAM) -c 10000000'
+
+.PHONY: all clean run benchmark install uninstall clang clang-static gcc gcc-static
 
 -include $(DEPS)
