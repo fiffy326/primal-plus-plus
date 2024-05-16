@@ -64,6 +64,9 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/$(PROGRAM) \
 		$(DESTDIR)$(MANPREFIX)/man1/$(MANPAGE)
 
-.PHONY: all clean install uninstall clang clang-static gcc gcc-static
+run:
+	$(PROGRAM)
+
+.PHONY: all clean run install uninstall clang clang-static gcc gcc-static
 
 -include $(DEPS)
