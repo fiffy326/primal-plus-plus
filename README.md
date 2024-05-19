@@ -4,9 +4,9 @@ Computes prime numbers using trial division.
 
 ## Preview
 
-![2024-05-16-180038](https://github.com/fiffy326/primal/assets/22841956/d5b3e13b-7d59-49c6-8f76-e003a482bb99)
+![2024-05-19-184036](https://github.com/fiffy326/primal-plus-plus/assets/22841956/acf339c6-ac04-412b-848b-cc4f39291fd2)
 
-![2024-05-16-180140](https://github.com/fiffy326/primal/assets/22841956/a4b26357-7a0a-4ac6-9192-f1ba28073eec)
+![2024-05-19-184053](https://github.com/fiffy326/primal-plus-plus/assets/22841956/9a36b362-f340-430b-98d8-c2f5d45250b3)
 
 ## Installation
 
