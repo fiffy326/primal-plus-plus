@@ -8,10 +8,10 @@
 using std::cerr, std::cin, std::cout, std::endl, std::string, std::to_string;
 
 /* Typedefs */
-typedef uint_fast8_t UINT8;
-typedef uint_fast16_t UINT16;
-typedef uint_fast32_t UINT32;
-typedef uint_fast64_t UINT64;
+typedef uint_fast8_t U8;
+typedef uint_fast16_t U16;
+typedef uint_fast32_t U32;
+typedef uint_fast64_t U64;
 
 /* Enums */
 typedef enum { COMPOSITE, PRIME } Primality;
@@ -20,41 +20,45 @@ typedef enum { NONE, LIST_TERMS, FIND_NTH_TERM, TEST_CANDIDATE } Mode;
 /* Structs */
 typedef struct {
     Mode mode;
-    UINT64 ceiling;
-    UINT64 index;
-    UINT64 candidate;
+    U64 ceiling;
+    U64 index;
+    U64 candidate;
 } Options;
+
+/* Constants */
+static const U64 U64_MIN = 1;
+static const U64 U64_MAX = UINT_FAST64_MAX - 1;
 
 string usage_message(const string& program_name) {
     return "Usage: " + program_name + " [-?] [-c ceiling] [-i index] "
         + "[-t candidate]";
 }
 
-void error_exit(const string& error_message) {
-    cerr << error_message << endl;
+void error_exit(const string& message) {
+    cerr << "Error: " << message << endl;
     exit(EXIT_FAILURE);
 }
 
 Mode parse(const string& arg_input) {
     Mode mode = (Mode)strtol(arg_input.c_str(), nullptr, 10);
     if ((mode == NONE) || (mode > sizeof(Mode) - 1))
-        error_exit("Error: Invalid mode");
+        error_exit("Invalid mode");
     return mode;
 }
 
-UINT64 parse(const string& arg_input, const string& arg_name) {
-    string too_large = "Error: The " + arg_name + " provided was greater than "
-        + "the maximum allowed value (max: " + to_string(UINT64_MAX - 1) + ")";
+U64 parse(const string& arg_input, const string& arg_name) {
+    string too_large = "The " + arg_name + " provided was greater than the "
+        + "maximum allowed value (max: " + to_string(U64_MAX) + ")";
 
-    string too_small = "Error: The " + arg_name + " provided was invalid or "
-        + "less than the minimum allowed value (min: " + to_string(1) + ")";
+    string too_small = "The " + arg_name + " provided was invalid or less than "
+        + "the minimum allowed value (min: " + to_string(U64_MIN) + ")";
 
-    UINT64 value;
-    if ((value = strtoull(arg_input.c_str(), nullptr, 10)) == UINT64_MAX)
+    U64 arg_value;
+    if ((arg_value = strtoull(arg_input.c_str(), nullptr, 10)) > U64_MAX)
         error_exit(too_large);
-    if (!value)
+    if (!arg_value)
         error_exit(too_small);
-    return value;
+    return arg_value;
 }
 
 void parse(Options* options, int argc, char** argv) {
@@ -82,15 +86,15 @@ void parse(Options* options, int argc, char** argv) {
                 cout << usage_message(argv[0]) << endl;
                 exit(EXIT_SUCCESS);
             default:
-                error_exit("Error: Invalid options");
+                error_exit("Invalid options");
         }
     }
     int extra_args = argc - optind;
     if (extra_args)
-        error_exit("Error: Invalid arguments");
+        error_exit("Invalid arguments");
 }
 
-UINT64 prompt(const string& prompt, const string& arg_name) {
+U64 prompt(const string& arg_name, const string& prompt) {
     cout << prompt;
     string input;
     cin >> input;
@@ -139,7 +143,7 @@ void test_candidate(T candidate) {
 template <typename T>
 void find_nth_term(T index) {
     T i = 3;
-    for (T number = 5; number <= UINT64_MAX; number += 2) {
+    for (T number = 5; number <= U64_MAX; number += 2) {
         if (primality_test(number) == COMPOSITE) continue;
         else {
             if (i == index) {
@@ -159,16 +163,16 @@ void interactive_session() {
          << endl;
     switch (prompt()) {
         case NONE:
-            error_exit("Error: Invalid mode");
+            error_exit("Invalid mode");
             break;
         case LIST_TERMS:
-            list_terms(prompt("Ceiling: ", "ceiling"));
+            list_terms(prompt("ceiling", "Ceiling: "));
             break;
         case FIND_NTH_TERM:
-            find_nth_term(prompt("Index: ", "index"));
+            find_nth_term(prompt("index", "Index: "));
             break;
         case TEST_CANDIDATE:
-            test_candidate(prompt("Candidate: ", "candidate"));
+            test_candidate(prompt("candidate", "Candidate: "));
             break;
     }
 }
@@ -176,7 +180,7 @@ void interactive_session() {
 void non_interactive_session(Options* options) {
     switch (options->mode) {
         case NONE:
-            error_exit("Error: Invalid mode");
+            error_exit("Invalid mode");
             break;
         case LIST_TERMS:
             list_terms(options->ceiling);
