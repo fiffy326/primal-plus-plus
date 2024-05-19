@@ -44,13 +44,13 @@ Mode parse(const string& arg_input) {
 
 UINT64 parse(const string& arg_input, const string& arg_name) {
     string too_large = "Error: The " + arg_name + " provided was greater than "
-        + "the maximum allowed value (max: " + to_string(UINT64_MAX) + ")";
+        + "the maximum allowed value (max: " + to_string(UINT64_MAX - 1) + ")";
 
     string too_small = "Error: The " + arg_name + " provided was invalid or "
         + "less than the minimum allowed value (min: " + to_string(1) + ")";
 
     UINT64 value;
-    if ((value = strtoull(arg_input.c_str(), nullptr, 10)) > UINT64_MAX)
+    if ((value = strtoull(arg_input.c_str(), nullptr, 10)) == UINT64_MAX)
         error_exit(too_large);
     if (!value)
         error_exit(too_small);
