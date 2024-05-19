@@ -64,10 +64,10 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/$(PROGRAM) \
 		$(DESTDIR)$(MANPREFIX)/man1/$(MANPAGE)
 
-run:
+run: all
 	./$(PROGRAM)
 
-benchmark:
+benchmark: all
 	hyperfine --warmup 5 './$(PROGRAM) -c 10000000'
 
 .PHONY: all clean run benchmark install uninstall clang clang-static gcc gcc-static
