@@ -30,7 +30,7 @@ string usage_message(const string& program_name) {
         + "[-t candidate]";
 }
 
-void error_exit(string error_message) {
+void error_exit(const string& error_message) {
     cerr << error_message << endl;
     exit(EXIT_FAILURE);
 }
@@ -90,11 +90,11 @@ void parse(Options* options, int argc, char** argv) {
         error_exit("Error: Invalid arguments");
 }
 
-UINT64 prompt(const string& prompt) {
+UINT64 prompt(const string& prompt, const string& arg_name) {
     cout << prompt;
     string input;
     cin >> input;
-    return parse(input, prompt);
+    return parse(input, arg_name);
 }
 
 Mode prompt() {
@@ -162,13 +162,13 @@ void interactive_session() {
             error_exit("Error: Invalid mode");
             break;
         case LIST_TERMS:
-            list_terms(prompt("Ceiling: "));
+            list_terms(prompt("Ceiling: ", "ceiling"));
             break;
         case FIND_NTH_TERM:
-            find_nth_term(prompt("Index: "));
+            find_nth_term(prompt("Index: ", "index"));
             break;
         case TEST_CANDIDATE:
-            test_candidate(prompt("Candidate: "));
+            test_candidate(prompt("Candidate: ", "candidate"));
             break;
     }
 }
