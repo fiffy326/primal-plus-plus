@@ -2,7 +2,9 @@
 #define PRIMALITY_H
 
 #include <iostream>
+#include <vector>
 
+#include <cmath>
 #include <cstddef>
 #include <cstdlib>
 
@@ -11,6 +13,9 @@
 using std::cout;
 using std::endl;
 using std::exit;
+using std::log;
+using std::max;
+using std::vector;
 
 /* Enums */
 typedef enum { NEITHER, COMPOSITE, PRIME } Primality;
@@ -42,22 +47,60 @@ Primality primality_test(T number) {
 }
 
 /**
+ * Generates a vector of primes using a Sieve of Eratosthenes
+ * @tparam T Unsigned integer
+ * @param ceiling Highest number to test for primality
+ * @param primes Vector of computed primes
+ */
+template <typename T>
+void sieve_of_eratosthenes(T ceiling, vector<T>& primes) {
+    vector<Primality> primality(ceiling + 1, PRIME);
+    primality[0] = primality[1] = NEITHER;
+    for (T number = 2; number * number <= ceiling; number++) {
+        if (primality[number] == PRIME) {
+            for (T i = number * number; i <= ceiling; i += number) {
+                primality[i] = COMPOSITE;
+            }
+        }
+    }
+    for (T number = 2; number <= ceiling; number++) {
+        if (primality[number] == PRIME) {
+            primes.push_back(number);
+        }
+    }
+}
+
+/**
  * Prints the prime at the given index in the series
  * @tparam T Unsigned integer
  * @param index Index of the prime to print
  */
 template <typename T>
 void find_nth_term(T index) {
-    T i = 3;
-    for (T number = 5; number <= U64_MAX; number += 2) {
-        if (primality_test(number) != PRIME) {
-            continue;
+    // Prime number theorem approximation of the Nth prime.
+    T ceiling_estimate = index * log(index) + index * log(log(index));
+
+    // Minimum sieve ceiling value (in case the approximation fails)
+    T ceiling_min = 15;
+
+    // Effective sieve ceiling
+    T ceiling;
+
+    vector<T> primes;
+    while (true) {
+        // (Re)calculate the effective sieve ceiling
+        ceiling = max(ceiling_estimate, ceiling_min);
+
+        // Generate primes
+        sieve_of_eratosthenes(ceiling, primes);
+
+        if (index <= primes.size()) {
+            cout << "Prime #" << index << " = " << primes[index - 1] << endl;
+            return;
         } else {
-            if (i == index) {
-                cout << "Prime #" << i << " = " << number << endl;
-                exit(EXIT_SUCCESS);
-            }
-            i++;
+            // Increase the ceiling if the sieve failed to find the desired prime
+            ceiling_min = ceiling * 1.25;
+            primes.clear();
         }
     }
 }
@@ -69,12 +112,11 @@ void find_nth_term(T index) {
  */
 template <typename T>
 void list_terms(T ceiling) {
-    T i = 3;
-    for (T number = 5; number <= ceiling; number += 2) {
-        if (primality_test(number) == PRIME) {
-            cout << "Prime #" << i << " = " << number << endl;
-            i++;
-        }
+    vector<T> primes;
+    sieve_of_eratosthenes(ceiling, primes);
+    
+    for (size_t i = 0; i < primes.size(); i++) {
+        cout << "Prime #" << (i + 1) << " = " << primes[i] << endl;
     }
 }
 
