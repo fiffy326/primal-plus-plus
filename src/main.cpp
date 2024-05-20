@@ -14,7 +14,7 @@ typedef uint_fast32_t U32;
 typedef uint_fast64_t U64;
 
 /* Enums */
-typedef enum { COMPOSITE, PRIME } Primality;
+typedef enum { NEITHER, COMPOSITE, PRIME } Primality;
 typedef enum { NONE, LIST_TERMS, FIND_NTH_TERM, TEST_CANDIDATE } Mode;
 
 /* Structs */
@@ -110,7 +110,7 @@ Mode prompt() {
 
 template <typename T>
 Primality primality_test(T number) {
-    if (number == 1) return COMPOSITE;
+    if (number == 1) return NEITHER;
     if ((number == 2) || (number == 3)) return PRIME;
     if ((!(number % 2)) || (!(number % 3))) return COMPOSITE;
     for (size_t div = 5; div * div <= number; div += 6) {
@@ -123,7 +123,7 @@ template <typename T>
 void list_terms(T ceiling) {
     T i = 3;
     for (T number = 5; number <= ceiling; number += 2) {
-        if (primality_test(number)) {
+        if (primality_test(number) == PRIME) {
             cout << "Prime #" << i << " = " << number << endl;
             i++;
         }
@@ -134,8 +134,12 @@ template <typename T>
 void test_candidate(T candidate) {
     if (primality_test(candidate) == PRIME) {
         cout << candidate << " is prime" << endl;
-    } else {
+    }
+    else if (primality_test(candidate) == COMPOSITE) {
         cout << candidate << " is composite" << endl;
+    }
+    else {
+        cout << candidate << " is neither prime nor composite" << endl;
     }
     exit(EXIT_SUCCESS);
 }
@@ -144,7 +148,7 @@ template <typename T>
 void find_nth_term(T index) {
     T i = 3;
     for (T number = 5; number <= U64_MAX; number += 2) {
-        if (primality_test(number) == COMPOSITE) continue;
+        if (primality_test(number) != PRIME) continue;
         else {
             if (i == index) {
                 cout << "Prime #" << i << " = " << number << endl;
