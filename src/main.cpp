@@ -11,7 +11,6 @@
 
 using std::cout;
 using std::endl;
-using std::exit;
 
 /**
  * Compute primes interactively using user input
