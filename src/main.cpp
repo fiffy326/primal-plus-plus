@@ -39,14 +39,14 @@ void error_exit(const string& message) {
     exit(EXIT_FAILURE);
 }
 
-Mode parse(const string& arg_input) {
+Mode parse_mode(const string& arg_input) {
     Mode mode = (Mode)strtol(arg_input.c_str(), nullptr, 10);
     if ((mode == NONE) || (mode > sizeof(Mode) - 1))
         error_exit("Invalid mode");
     return mode;
 }
 
-U64 parse(const string& arg_input, const string& arg_name) {
+U64 parse_u64(const string& arg_input, const string& arg_name) {
     string too_large = "The " + arg_name + " provided was greater than the "
         + "maximum allowed value (max: " + to_string(U64_MAX) + ")";
 
@@ -61,26 +61,24 @@ U64 parse(const string& arg_input, const string& arg_name) {
     return arg_value;
 }
 
-void parse(Options* options, int argc, char** argv) {
+void parse_options(Options* options, int argc, char** argv) {
     options->mode = NONE;
-    options->ceiling = 0;
-    options->index = 0;
-    options->candidate = 0;
+    options->ceiling = options->index = options->candidate = 0;
     int opt;
     while ((opt = getopt(argc, argv, ":c:i:t:")) != -1) {
         switch (opt) {
             case ':':
             case 'c':
                 options->mode = LIST_TERMS;
-                options->ceiling = parse(optarg, "ceiling");
+                options->ceiling = parse_u64(optarg, "ceiling");
                 break;
             case 'i':
                 options->mode = FIND_NTH_TERM;
-                options->index = parse(optarg, "index");
+                options->index = parse_u64(optarg, "index");
                 break;
             case 't':
                 options->mode = TEST_CANDIDATE;
-                options->candidate = parse(optarg, "candidate");
+                options->candidate = parse_u64(optarg, "candidate");
                 break;
             case '?':
                 cout << usage_message(argv[0]) << endl;
@@ -94,18 +92,18 @@ void parse(Options* options, int argc, char** argv) {
         error_exit("Invalid arguments");
 }
 
-U64 prompt(const string& arg_name, const string& prompt) {
+U64 prompt_u64(const string& arg_name, const string& prompt) {
     cout << prompt;
     string input;
     cin >> input;
-    return parse(input, arg_name);
+    return parse_u64(input, arg_name);
 }
 
-Mode prompt() {
+Mode prompt_mode() {
     cout << "Mode: ";
     string input;
     cin >> input;
-    return parse(input);
+    return parse_mode(input);
 }
 
 template <typename T>
@@ -165,18 +163,18 @@ void interactive_session() {
     cout << "[2] Compute the prime at a given index in the series" << endl;
     cout << "[3] Perform a primality test on a given candidate integer" << endl
          << endl;
-    switch (prompt()) {
+    switch (prompt_mode()) {
         case NONE:
             error_exit("Invalid mode");
             break;
         case LIST_TERMS:
-            list_terms(prompt("ceiling", "Ceiling: "));
+            list_terms(prompt_u64("ceiling", "Ceiling: "));
             break;
         case FIND_NTH_TERM:
-            find_nth_term(prompt("index", "Index: "));
+            find_nth_term(prompt_u64("index", "Index: "));
             break;
         case TEST_CANDIDATE:
-            test_candidate(prompt("candidate", "Candidate: "));
+            test_candidate(prompt_u64("candidate", "Candidate: "));
             break;
     }
 }
@@ -200,7 +198,7 @@ void non_interactive_session(Options* options) {
 
 int main(int argc, char** argv) {
     Options options;
-    parse(&options, argc, argv);
+    parse_options(&options, argc, argv);
     if (options.mode == NONE)
         interactive_session();
     else
