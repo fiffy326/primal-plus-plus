@@ -21,8 +21,8 @@ CXXFLAGS := -pipe -march=native -std=c++23 -pedantic -Wall -Werror -Wextra -Ofas
 CFLAGS := -pipe -march=native -std=c17 -pedantic -Wall -Werror -Wextra -Ofast
 override LDFLAGS += 
 
-CC := clang
-CXX := clang++
+CC := gcc
+CXX := g++
 
 all: $(PROGRAM)
 
