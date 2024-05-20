@@ -1,6 +1,6 @@
 # Primal++
 
-Computes prime numbers using trial division.
+Computes prime numbers using a Sieve of Eratosthenes.
 
 ## Preview
 
