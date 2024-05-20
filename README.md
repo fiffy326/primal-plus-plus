@@ -15,7 +15,9 @@ git clone https://github.com/fiffy326/primal-plus-plus
 cd primal-plus-plus
 make
 sudo make install
+```
 
+```sh
 # Other compilation options:
 make gcc
 make gcc-static
