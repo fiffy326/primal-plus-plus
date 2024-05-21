@@ -11,8 +11,8 @@ Computes prime numbers using a Sieve of Eratosthenes.
 ## Installation
 
 ```sh
-git clone https://github.com/fiffy326/primal-plus-plus
-cd primal-plus-plus
+git clone https://github.com/fiffy326/primal.cpp
+cd primal.cpp
 make
 sudo make install
 ```
