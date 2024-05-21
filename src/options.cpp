@@ -4,7 +4,7 @@
 #include <string>
 
 #include <cstdlib>
-#include "getopt.h"
+#include <unistd.h>
 
 #include "error_exit.h"
 #include "mode.h"
@@ -37,7 +37,6 @@ void parse_options(Options* options, int argc, char** argv) {
     int opt;
     while ((opt = getopt(argc, argv, ":c:i:t:")) != -1) {
         switch (opt) {
-            case ':':
             case 'c':
                 options->mode = LIST_TERMS;
                 options->ceiling = parse_unsigned(optarg, "ceiling");

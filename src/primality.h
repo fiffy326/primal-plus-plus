@@ -20,7 +20,6 @@ using std::vector;
 /* Enums */
 typedef enum { NEITHER, COMPOSITE, PRIME } Primality;
 
-/* Functions */
 /**
  * Performs a primality test on a number
  * @tparam T Unsigned integer
@@ -56,6 +55,7 @@ template <typename T>
 void sieve_of_eratosthenes(T ceiling, vector<T>& primes) {
     vector<Primality> primality(ceiling + 1, PRIME);
     primality[0] = primality[1] = NEITHER;
+
     for (T number = 2; number * number <= ceiling; number++) {
         if (primality[number] == PRIME) {
             for (T i = number * number; i <= ceiling; i += number) {
@@ -63,6 +63,7 @@ void sieve_of_eratosthenes(T ceiling, vector<T>& primes) {
             }
         }
     }
+
     for (T number = 2; number <= ceiling; number++) {
         if (primality[number] == PRIME) {
             primes.push_back(number);
@@ -98,7 +99,8 @@ void find_nth_term(T index) {
             cout << "Prime #" << index << " = " << primes[index - 1] << endl;
             return;
         } else {
-            // Increase the ceiling if the sieve failed to find the desired prime
+            // Increase ceiling if the sieve didn't find the desired prime
+            cout << "Increasing sieve ceiling" << endl;
             ceiling_min = ceiling * 1.25;
             primes.clear();
         }
@@ -115,7 +117,7 @@ void list_terms(T ceiling) {
     vector<T> primes;
     sieve_of_eratosthenes(ceiling, primes);
     
-    for (size_t i = 0; i < primes.size(); i++) {
+    for (T i = 0; i < primes.size(); i++) {
         cout << "Prime #" << (i + 1) << " = " << primes[i] << endl;
     }
 }
@@ -127,16 +129,17 @@ void list_terms(T ceiling) {
  */
 template <typename T>
 void test_candidate(T candidate) {
-    if (primality_test(candidate) == PRIME) {
-        cout << candidate << " is prime" << endl;
+    switch (primality_test(candidate)) {
+        case PRIME:
+            cout << candidate << " is prime" << endl;
+            break;
+        case COMPOSITE:
+            cout << candidate << " is composite" << endl;
+            break;
+        case NEITHER:
+            cout << candidate << " is neither prime nor composite" << endl;
+            break;
     }
-    else if (primality_test(candidate) == COMPOSITE) {
-        cout << candidate << " is composite" << endl;
-    }
-    else {
-        cout << candidate << " is neither prime nor composite" << endl;
-    }
-    exit(EXIT_SUCCESS);
 }
 
 #endif // PRIMALITY_H

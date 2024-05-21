@@ -13,7 +13,7 @@ using std::cout;
 using std::endl;
 
 /**
- * Compute primes interactively using user input
+ * Compute primes using user input
  */
 void interactive_session() {
     cout << ASCII_ART << endl;
@@ -38,7 +38,7 @@ void interactive_session() {
 }
 
 /**
- * Compute primes non-interactively using the command line options
+ * Compute primes using the command line options
  * @param options Struct of parsed command line options
  */
 void non_interactive_session(Options* options) {
