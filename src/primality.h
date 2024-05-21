@@ -37,7 +37,7 @@ Primality primality_test(T number) {
     if ((!(number % 2)) || (!(number % 3))) {
         return COMPOSITE;
     }
-    for (size_t divisor = 5; divisor * divisor <= number; divisor += 6) {
+    for (T divisor = 5; divisor * divisor <= number; divisor += 6) {
         if (!(number % divisor) || (!(number % (divisor + 2)))) {
             return COMPOSITE;
         }
@@ -53,6 +53,8 @@ Primality primality_test(T number) {
  */
 template <typename T>
 void sieve_of_eratosthenes(T ceiling, vector<T>& primes) {
+    cout << "Sieving primes..." << endl;
+
     vector<Primality> primality(ceiling + 1, PRIME);
     primality[0] = primality[1] = NEITHER;
 
@@ -84,15 +86,14 @@ void find_nth_term(T index) {
     // Minimum sieve ceiling value (in case the approximation fails)
     T ceiling_min = 15;
 
-    // Effective sieve ceiling
+    // Sieve ceiling
     T ceiling;
 
     vector<T> primes;
     while (true) {
-        // (Re)calculate the effective sieve ceiling
+        // (Re)calculate the sieve ceiling
         ceiling = max(ceiling_estimate, ceiling_min);
 
-        // Generate primes
         sieve_of_eratosthenes(ceiling, primes);
 
         if (index <= primes.size()) {
