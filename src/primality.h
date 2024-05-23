@@ -119,7 +119,7 @@ void list_terms(T ceiling) {
     sieve_of_eratosthenes(ceiling, primes);
     
     for (T i = 0; i < primes.size(); i++) {
-        cout << "Prime #" << (i + 1) << " = " << primes[i] << endl;
+        cout << "Prime #" << (i + 1) << " = " << primes[i] << "\n";
     }
 }
 
