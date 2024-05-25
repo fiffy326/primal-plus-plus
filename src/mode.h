@@ -4,10 +4,10 @@
 #include <string>
 
 /* Enums */
-typedef enum { NONE, LIST_TERMS, FIND_NTH_TERM, TEST_CANDIDATE } Mode;
+typedef enum { NONE, LIST_PRIMES, FIND_NTH_PRIME, TEST_NUMBER } Mode;
 
 /* Functions */
-Mode parse_mode(const std::string& arg_input);
-Mode prompt_mode();
+Mode parse(const std::string &input);
+Mode input(const std::string &prompt);
 
 #endif // MODE_H

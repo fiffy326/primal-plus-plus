@@ -1,5 +1,5 @@
 PROGRAM := primal++
-VERSION := 1.0.2
+VERSION := 1.0.3
 
 MANPAGE := $(PROGRAM).1
 

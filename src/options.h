@@ -1,21 +1,18 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
-#include <string>
-
 #include "mode.h"
-#include "unsigned.h"
+#include "natural_number.h"
 
 /* Structs */
 typedef struct {
     Mode mode;
-    U64 ceiling;
-    U64 index;
-    U64 candidate;
+    NN64 ceiling;
+    NN64 index;
+    NN64 number;
 } Options;
 
 /* Functions */
-std::string usage_message(const std::string& program_name);
-void parse_options(Options* options, int argc, char** argv);
+void parse_options(Options *options, int argc, char **argv);
 
 #endif // OPTIONS_H

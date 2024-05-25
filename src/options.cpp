@@ -1,63 +1,46 @@
 #include "options.h"
 
+#include <cstdlib>
 #include <iostream>
 #include <string>
-
-#include <cstdlib>
 #include <unistd.h>
 
 #include "error_exit.h"
 #include "mode.h"
-#include "unsigned.h"
+#include "natural_number.h"
 
-using std::cout;
-using std::endl;
-using std::exit;
-using std::string;
-
-/**
- * Builds a program usage message string
- * @param program_name Name of the program
- * @return Usage message string for the program
- */
-string usage_message(const string& program_name) {
+std::string get_usage_message(const std::string &program_name) {
     return "Usage: " + program_name + " [-?] [-c CEILING] [-i INDEX] "
-        + "[-t CANDIDATE]";
+        + "[-t NUMBER]";
 }
 
-/**
- * Parses command line options to an Options struct
- * @param options Options struct to parse values into
- * @param argc Number of arguments passed to the program
- * @param argv Arguments passed to the program
- */
-void parse_options(Options* options, int argc, char** argv) {
+void parse_options(Options *options, int argc, char **argv) {
     options->mode = NONE;
-    options->ceiling = options->index = options->candidate = 0;
+    options->ceiling = options->index = options->number = 0;
     int opt;
-    while ((opt = getopt(argc, argv, ":c:i:t:")) != -1) {
+    while ((opt = getopt(argc, argv, "c:i:t:")) != -1) {
         switch (opt) {
             case 'c':
-                options->mode = LIST_TERMS;
-                options->ceiling = parse_unsigned(optarg, "ceiling");
+                options->mode = LIST_PRIMES;
+                options->ceiling = parse("ceiling", optarg);
                 break;
             case 'i':
-                options->mode = FIND_NTH_TERM;
-                options->index = parse_unsigned(optarg, "index");
+                options->mode = FIND_NTH_PRIME;
+                options->index = parse("index", optarg);
                 break;
             case 't':
-                options->mode = TEST_CANDIDATE;
-                options->candidate = parse_unsigned(optarg, "candidate");
+                options->mode = TEST_NUMBER;
+                options->number = parse("number", optarg);
                 break;
             case '?':
-                cout << usage_message(argv[0]) << endl;
-                exit(EXIT_SUCCESS);
+                std::cout << get_usage_message(argv[0]) << std::endl;
+                std::exit(EXIT_SUCCESS);
             default:
-                error_exit("Invalid options");
+                error_exit("Invalid options.");
         }
     }
     int extra_args = argc - optind;
     if (extra_args) {
-        error_exit("Invalid arguments");
+        error_exit("Invalid arguments.");
     }
 }

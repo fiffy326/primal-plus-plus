@@ -4,6 +4,6 @@
 #include <string>
 
 /* Functions */
-void error_exit(const std::string& message);
+void error_exit(const std::string &message);
 
 #endif // ERROR_EXIT_H

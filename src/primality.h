@@ -1,31 +1,18 @@
 #ifndef PRIMALITY_H
 #define PRIMALITY_H
 
-#include <iostream>
-#include <vector>
-
 #include <cmath>
 #include <cstddef>
 #include <cstdlib>
+#include <iostream>
+#include <vector>
 
-#include "unsigned.h"
-
-using std::cout;
-using std::endl;
-using std::exit;
-using std::log;
-using std::max;
-using std::vector;
+#include "natural_number.h"
 
 /* Enums */
 typedef enum { NEITHER, COMPOSITE, PRIME } Primality;
 
-/**
- * Performs a primality test on a number
- * @tparam T Unsigned integer
- * @param number Number to test
- * @return Primality enum of the test outcome
- */
+/* Function templates */
 template <typename T>
 Primality primality_test(T number) {
     if (number == 1) {
@@ -45,17 +32,11 @@ Primality primality_test(T number) {
     return PRIME;
 }
 
-/**
- * Generates a vector of primes using a Sieve of Eratosthenes
- * @tparam T Unsigned integer
- * @param ceiling Highest number to test for primality
- * @param primes Vector of computed primes
- */
 template <typename T>
-void sieve_of_eratosthenes(T ceiling, vector<T>& primes) {
-    cout << "Sieving primes..." << endl;
+void sieve_of_eratosthenes(T ceiling, std::vector<T>& primes) {
+    std::cout << "Sieving primes..." << std::endl;
 
-    vector<Primality> primality(ceiling + 1, PRIME);
+    std::vector<Primality> primality(ceiling + 1, PRIME);
     primality[0] = primality[1] = NEITHER;
 
     for (T number = 2; number * number <= ceiling; number++) {
@@ -73,15 +54,10 @@ void sieve_of_eratosthenes(T ceiling, vector<T>& primes) {
     }
 }
 
-/**
- * Prints the prime at the given index in the series
- * @tparam T Unsigned integer
- * @param index Index of the prime to print
- */
 template <typename T>
-void find_nth_term(T index) {
+void find_nth_prime(T n) {
     // Prime number theorem approximation of the Nth prime.
-    T ceiling_estimate = index * log(index) + index * log(log(index));
+    T ceiling_estimate = n * std::log(n) + n * std::log(std::log(n));
 
     // Minimum sieve ceiling value (in case the approximation fails)
     T ceiling_min = 15;
@@ -89,56 +65,46 @@ void find_nth_term(T index) {
     // Sieve ceiling
     T ceiling;
 
-    vector<T> primes;
+    std::vector<T> primes;
     while (true) {
         // (Re)calculate the sieve ceiling
-        ceiling = max(ceiling_estimate, ceiling_min);
+        ceiling = std::max(ceiling_estimate, ceiling_min);
 
         sieve_of_eratosthenes(ceiling, primes);
 
-        if (index <= primes.size()) {
-            cout << "Prime #" << index << " = " << primes[index - 1] << endl;
+        if (n <= primes.size()) {
+            std::cout << "Prime #" << n << " = " << primes[n - 1] << std::endl;
             return;
         } else {
             // Increase ceiling if the sieve didn't find the desired prime
-            cout << "Increasing sieve ceiling" << endl;
+            std::cout << "Increasing sieve ceiling..." << std::endl;
             ceiling_min = ceiling * 1.25;
             primes.clear();
         }
     }
 }
 
-/**
- * Prints every prime below a given ceiling value
- * @tparam T Unsigned integer
- * @param ceiling Ceiling value
- */
 template <typename T>
-void list_terms(T ceiling) {
-    vector<T> primes;
+void list_primes(T ceiling) {
+    std::vector<T> primes;
     sieve_of_eratosthenes(ceiling, primes);
     
     for (T i = 0; i < primes.size(); i++) {
-        cout << "Prime #" << (i + 1) << " = " << primes[i] << "\n";
+        std::cout << "Prime #" << (i + 1) << " = " << primes[i] << "\n";
     }
 }
 
-/**
- * Prints the result of a primality test for given candidate number
- * @tparam T Unsigned integer
- * @param candidate Number to test
- */
 template <typename T>
-void test_candidate(T candidate) {
-    switch (primality_test(candidate)) {
+void test_number(T number) {
+    switch (primality_test(number)) {
         case PRIME:
-            cout << candidate << " is prime" << endl;
+            std::cout << number << " is prime." << std::endl;
             break;
         case COMPOSITE:
-            cout << candidate << " is composite" << endl;
+            std::cout << number << " is composite." << std::endl;
             break;
         case NEITHER:
-            cout << candidate << " is neither prime nor composite" << endl;
+            std::cout << number << " is neither prime nor composite." << std::endl;
             break;
     }
 }
