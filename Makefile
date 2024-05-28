@@ -77,7 +77,7 @@ benchmark: all
 	@if command -v hyperfine > /dev/null 2>&1; then \
 		hyperfine --warmup 5 './$(PROGRAM) -l 10000000'; \
 	else \
-		echo >&2 "Error: Hyperfine is required to run benchmarks"; \
+		echo >&2 "Error: Hyperfine is required to run benchmarks."; \
 	fi
 
 .PHONY: all clean run benchmark install uninstall clang clang-static gcc gcc-static
