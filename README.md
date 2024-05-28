@@ -3,9 +3,10 @@
 Computes prime numbers using a Sieve of Eratosthenes.
 
 ## Preview
-![2024-05-26-024647](https://github.com/fiffy326/primal.cpp/assets/22841956/a9225696-fa89-4d17-9076-51a0a89d91a4)
 
-![2024-05-26-024630](https://github.com/fiffy326/primal.cpp/assets/22841956/e4ca252c-2fca-440d-ac83-fe87c9ec496b)
+![2024-05-28-203210](https://github.com/fiffy326/primal.cpp/assets/22841956/6947786e-11bd-4944-b74d-4fcdb9b69156)
+
+![2024-05-28-203222](https://github.com/fiffy326/primal.cpp/assets/22841956/bd03934a-9826-4c38-8911-813d39103d6e)
 
 ## Installation
 
@@ -26,8 +27,5 @@ make clang-static
 ## Dependencies
 
 Compilation is done with gcc by default.
-
-You may also build with clang if you prefer.
-
 
 Hyperfine is also required to use the `make benchmark` command.
