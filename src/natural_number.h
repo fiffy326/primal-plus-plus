@@ -1,21 +1,20 @@
-#ifndef NATURAL_NUMBER_H
-#define NATURAL_NUMBER_H
+#ifndef PRIMAL_NATURAL_NUMBER_H
+#define PRIMAL_NATURAL_NUMBER_H
 
 #include <cstdint>
-#include <string>
 
-/* Typedefs */
-using NN08 = uint_fast8_t;
-using NN16 = uint_fast16_t;
-using NN32 = uint_fast32_t;
-using NN64 = uint_fast64_t;
+/* Types to represent natural numbers (positive integers). */
+using NN8 = uint8_t;
+using NN16 = uint16_t;
+using NN32 = uint32_t;
+using NN64 = uint64_t;
+static const NN8 NN8_MIN = 1; // Natural numbers must be positive.
+static const NN16 NN16_MIN = NN8_MIN;
+static const NN32 NN32_MIN = NN8_MIN;
+static const NN64 NN64_MIN = NN8_MIN;
+static const NN8 NN8_MAX = UINT8_MAX;
+static const NN16 NN16_MAX = UINT16_MAX;
+static const NN32 NN32_MAX = UINT32_MAX;
+static const NN64 NN64_MAX = UINT64_MAX - 1; // Allow overflow detection.
 
-/* Constants */
-static const NN64 NN64_MIN = 1;
-static const NN64 NN64_MAX = UINT_FAST64_MAX - 1; // Allow overflow detection
-
-/* Functions */
-NN64 parse(const std::string &identifier, const std::string &input);
-NN64 input(const std::string &identifier, const std::string &prompt);
-
-#endif // NATURAL_NUMBER_H
+#endif // PRIMAL_NATURAL_NUMBER_H

@@ -1,57 +1,96 @@
+#include <cstdlib>
 #include <iostream>
+#include <stdexcept>
+#include <string>
 
 #include "ascii_art.h"
-#include "error_exit.h"
-#include "mode.h"
-#include "natural_number.h"
-#include "options.h"
-#include "primality.h"
+#include "cli.h"
+#include "find_nth_prime.h"
+#include "list_primes.h"
+#include "parser.h"
+#include "test_number.h"
 
-void interactive_session() {
-    std::cout << ASCII_ART << '\n'
-    << "[1] List every prime below a ceiling.\n"
-    << "[2] Find the Nth prime in the series.\n"
-    << "[3] Perform a primality test on a number.\n" << std::endl;
-    switch (input("Mode: ")) {
-        case LIST_PRIMES:
-            list_primes(input("ceiling", "Ceiling: "));
-            break;
-        case FIND_NTH_PRIME:
-            find_nth_prime(input("index", "Index: "));
-            break;
-        case TEST_NUMBER:
-            test_number(input("number", "Number: "));
-            break;
-        default:
-            error_exit("Invalid mode.");
-    }
+/**
+ * Program help message builder.
+ * @param program_name Name of the program
+ * @return Program help message
+ */
+std::string get_help_message(const std::string &program_name) {
+    return "Usage: " + program_name + " [-?] [-l CEILING] [-n INDEX] "
+    + "[-t NUMBER]";
 }
 
-void non_interactive_session(Options *options) {
-    switch (options->mode) {
-        case LIST_PRIMES:
-            list_primes(options->ceiling);
+/**
+ * Starts a session using the command line options.
+ * @param cli Command line options
+ * @return EXIT_SUCCESS if successful
+ */
+int cli_session(Cli &cli) {
+    switch (cli.getCommand()) {
+        case Command::LIST_PRIMES:
+            list_primes(cli.getCeiling());
             break;
-        case FIND_NTH_PRIME:
-            find_nth_prime(options->index);
+        case Command::FIND_NTH_PRIME:
+            find_nth_prime(cli.getIndex());
             break;
-        case TEST_NUMBER:
-            test_number(options->number);
+        case Command::TEST_NUMBER:
+            test_number(cli.getNumber());
+            break;
+        case Command::SHOW_HELP:
+            std::cout << get_help_message(cli.getProgramName()) << std::endl;
             break;
         default:
-            error_exit("Invalid mode.");
+            throw std::runtime_error("Invalid command.");
     }
+    return EXIT_SUCCESS;
 }
 
+/**
+ * Starts a session using interactive user input.
+ * @return EXIT_SUCCESS if successful
+ */
+int interactive_session() {
+    std::cout << ASCII_ART
+    << "[1] List primes up to a value.\n"
+    << "[2] Find the Nth prime number.\n"
+    << "[3] Test if a number is prime.\n" << std::endl;
+
+    switch (input<Command>("Command: ")) {
+        case Command::LIST_PRIMES:
+            list_primes(input("Ceiling: "));
+            break;
+        case Command::FIND_NTH_PRIME:
+            find_nth_prime(input("Index: "));
+            break;
+        case Command::TEST_NUMBER:
+            test_number(input("Number: "));
+            break;
+        default:
+            throw std::runtime_error("Invalid command.");
+    }
+    return EXIT_SUCCESS;
+}
+
+/**
+ * Program entry point.
+ * @param argc Number of program arguments
+ * @param argv Program arguments
+ * @return EXIT_SUCCESS if successful
+ */
 int main(int argc, char **argv) {
-    Options options;
-    parse_options(&options, argc, argv);
+    try {
+        // Parse command line arguments.
+        Cli cli = Cli(argc, argv);
 
-    if (options.mode == NONE) {
-        interactive_session();
-    } else {
-        non_interactive_session(&options);
+        // Start the appropriate session type.
+        switch (cli.getCommand()) {
+            case Command::INTERACTIVE:
+                return interactive_session();
+            default:
+                return cli_session(cli);
+        }
+    } catch (const std::exception &e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return EXIT_FAILURE;
     }
-
-    return 0;
 }
