@@ -59,6 +59,7 @@ T input(const std::string &prompt) {
     std::cout << prompt;
     std::string input;
     std::cin >> input;
+    std::cout << std::endl;
     return parse<T>(input);
 }
 
