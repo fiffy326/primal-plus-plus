@@ -1,5 +1,5 @@
 PROGRAM := primal++
-VERSION := 1.0.3
+VERSION := 1.0.4
 
 MANPAGE := $(PROGRAM).1
 
@@ -75,7 +75,7 @@ run: all
 
 benchmark: all
 	@if command -v hyperfine > /dev/null 2>&1; then \
-		hyperfine --warmup 5 './$(PROGRAM) -c 10000000'; \
+		hyperfine --warmup 5 './$(PROGRAM) -l 10000000'; \
 	else \
 		echo >&2 "Error: Hyperfine is required to run benchmarks"; \
 	fi
