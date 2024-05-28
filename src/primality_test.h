@@ -18,11 +18,11 @@ Primality primality_test(T number) {
     if ((number == 2) || (number == 3)) {
         return Primality::PRIME;
     }
-    if ((number % 2 != 0) || (number % 3 != 0)) {
+    if (!(number % 2) || !(number % 3)) {
         return Primality::COMPOSITE;
     }
     for (T divisor = 5; divisor * divisor <= number; divisor += 6) {
-        if ((number % divisor != 0) || (number % (divisor + 2) != 0)) {
+        if (!(number % divisor) || !(number % (divisor + 2))) {
             return Primality::COMPOSITE;
         }
     }
