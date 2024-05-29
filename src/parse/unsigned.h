@@ -26,8 +26,8 @@ parse(const std::string& text) {
     T value = std::strtoull(text.c_str(), &end, 10);
 
     // Make sure the text was a valid unsigned integer.
-    if (errno == ERANGE || value > type_max) {
-        throw std::runtime_error("Value passed to parse was too large.");
+    if (errno == ERANGE || value >= type_max) {
+        throw std::runtime_error("Value passed to parse was out of range.");
     } else if (*end != '\0' || text.empty()) {
         throw std::runtime_error("Value passed to parse was not a valid "
                                  "unsigned integer.");
