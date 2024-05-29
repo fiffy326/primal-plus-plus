@@ -28,10 +28,12 @@ parse(const std::string& text) {
 
     // Make sure the text was a valid integer.
     if (errno == ERANGE || value > type_max) {
-        throw std::runtime_error("Value passed to parse was too large.");
+        throw std::runtime_error("Value of signed integer passed to parse was "
+                                 "too large.");
     } else if (*end != '\0' || text.empty() || value < type_min) {
-        throw std::runtime_error("Value passed to parse was too small or "
-                                 "not a valid signed integer.");
+        throw std::runtime_error("Value of signed integer passed to parse was "
+                                 "too small or was not a valid signed integer."
+                                 );
     }
 }
 

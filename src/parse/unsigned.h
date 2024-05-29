@@ -27,10 +27,11 @@ parse(const std::string& text) {
 
     // Make sure the text was a valid unsigned integer.
     if (errno == ERANGE || value >= type_max) {
-        throw std::runtime_error("Value passed to parse was out of range.");
+        throw std::runtime_error("Value of unsigned integer passed to parse "
+                                 "was out of range.");
     } else if (*end != '\0' || text.empty()) {
-        throw std::runtime_error("Value passed to parse was not a valid "
-                                 "unsigned integer.");
+        throw std::runtime_error("Value of unsigned integer passed to parse "
+                                 "was not a valid unsigned integer.");
     } else {
         return static_cast<T>(value);
     }
