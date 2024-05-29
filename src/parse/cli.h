@@ -27,13 +27,14 @@ private:
 
 /**
  * Parses the command line options passed to the program.
- * @tparam T Cli object type
+ * @tparam T Cli object return type
  * @param argc Number of command line arguments
  * @param argv Command line arguments
  * @return Cli object of parsed command line options
  */
 template <typename T>
-T parse(int argc, char** argv) {
+typename std::enable_if_t<std::is_class_v<T>, T>
+parse(int argc, char** argv) {
     return Cli(argc, argv);
 }
 

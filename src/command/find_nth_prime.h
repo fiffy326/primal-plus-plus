@@ -14,7 +14,7 @@
  * @param n Prime index
  */
 template <typename T>
-typename std::enable_if<std::is_unsigned<T>::value, void>::type
+typename std::enable_if_t<std::is_unsigned_v<T>, void>
 find_nth_prime(T n) {
     // Prime number theorem approximation for the Nth prime.
     T ceiling_estimate = n * std::log(n) + n * std::log(std::log(n));

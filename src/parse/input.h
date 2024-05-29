@@ -5,8 +5,7 @@
 #include <string>
 
 #include "enum.h"
-#include "signed.h"
-#include "unsigned.h"
+#include "number.h"
 
 /**
  * Prompts the user for input then parses it.

@@ -6,7 +6,7 @@
 #include <unistd.h>
 
 #include "../enum/command.h"
-#include "unsigned.h"
+#include "number.h"
 
 /**
  * Parses the command line options passed to the program.
