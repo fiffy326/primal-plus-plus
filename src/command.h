@@ -1,8 +1,13 @@
 #ifndef PRIMAL_COMMAND_H
 #define PRIMAL_COMMAND_H
 
+#include <cstdlib>
+#include <string>
+
+#include "parser.h"
+
 /**
- * Represents functions the program may perform.
+ * Represents the functions that the program may perform.
  */
 enum class Command {
     LIST_PRIMES = 1,
@@ -11,5 +16,7 @@ enum class Command {
     SHOW_HELP = 4,
     INTERACTIVE = 5
 };
+
+template <> Command parse(const std::string &input);
 
 #endif // PRIMAL_COMMAND_H

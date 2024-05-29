@@ -5,9 +5,10 @@
 
 #include "ascii_art.h"
 #include "cli.h"
+#include "command.h"
 #include "find_nth_prime.h"
 #include "list_primes.h"
-#include "parser.h"
+#include "natural_number.h"
 #include "test_number.h"
 
 /**
@@ -57,13 +58,13 @@ int interactive_session() {
 
     switch (input<Command>("Command: ")) {
         case Command::LIST_PRIMES:
-            list_primes(input("Ceiling: "));
+            list_primes(input<NN64>("Ceiling: "));
             break;
         case Command::FIND_NTH_PRIME:
-            find_nth_prime(input("Index: "));
+            find_nth_prime(input<NN64>("Index: "));
             break;
         case Command::TEST_NUMBER:
-            test_number(input("Number: "));
+            test_number(input<NN64>("Number: "));
             break;
         default:
             throw std::runtime_error("Invalid command.");
@@ -73,13 +74,13 @@ int interactive_session() {
 
 /**
  * Program entry point.
- * @param argc Number of program arguments
- * @param argv Program arguments
+ * @param argc Number of command line arguments
+ * @param argv Command line arguments
  * @return EXIT_SUCCESS if successful
  */
 int main(int argc, char **argv) {
     try {
-        // Parse command line arguments.
+        // Parse the command line arguments.
         Cli cli = Cli(argc, argv);
 
         // Start the appropriate session type.

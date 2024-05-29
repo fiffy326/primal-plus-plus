@@ -6,12 +6,11 @@
 
 #include "command.h"
 #include "natural_number.h"
-#include "parser.h"
 
 /**
- * Parses the command line options.
- * @param argc Number of program arguments
- * @param argv Program arguments
+ * Parses the command line options passed to the program.
+ * @param argc Number of command line arguments
+ * @param argv Command line arguments
  */
 Cli::Cli(int argc, char **argv) {
     program_name = argv[0];
@@ -43,22 +42,42 @@ Cli::Cli(int argc, char **argv) {
     }
 }
 
+/**
+ * Gets the program name command line argument (argv[0]).
+ * @return Program name
+ */
 std::string Cli::getProgramName() {
     return program_name;
 }
 
+/**
+ * Gets the Command enum appropriate for the provided command line options.
+ * @return
+ */
 Command Cli::getCommand() {
     return command;
 }
 
+/**
+ * Gets the 'ceiling' command line argument for the LIST_PRIMES command.
+ * @return Ceiling
+ */
 NN64 Cli::getCeiling() {
     return ceiling;
 }
 
+/**
+ * Gets the 'index' command line argument for the FIND_NTH_PRIME command.
+ * @return
+ */
 NN64 Cli::getIndex() {
     return index;
 }
 
+/**
+ * Gets the 'number' command line argument for the TEST_NUMBER command.
+ * @return
+ */
 NN64 Cli::getNumber() {
     return number;
 }

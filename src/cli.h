@@ -7,7 +7,7 @@
 #include "natural_number.h"
 
 /**
- * Represents the command line options.
+ * Represents the command line options passed to the program.
  */
 class Cli {
 public:

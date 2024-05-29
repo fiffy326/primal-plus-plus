@@ -1,8 +1,8 @@
-#include "parser.h"
+#include "command.h"
 
 /**
  * Parses a numeric string to a Command enum type.
- * @param input Numeric input string
+ * @param input Numeric input string to parse
  * @return Parsed Command enum value
  */
 template <>

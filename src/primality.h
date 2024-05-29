@@ -2,7 +2,7 @@
 #define PRIMAL_PRIMALITY_H
 
 /**
- * Represents the outcome of a primality test.
+ * Represents the possible outcomes of a primality test.
  */
 enum class Primality { NEITHER, COMPOSITE, PRIME };
 
