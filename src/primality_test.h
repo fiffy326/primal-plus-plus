@@ -14,7 +14,7 @@
 template <typename T>
 typename std::enable_if<std::is_unsigned<T>::value, Primality>::type
 primality_test(T number) {
-    if (number == 1) {
+    if ((number == 0) || (number == 1)) {
         return Primality::NEITHER;
     }
     if ((number == 2) || (number == 3)) {
