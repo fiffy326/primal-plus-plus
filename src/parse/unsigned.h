@@ -17,7 +17,6 @@
 template <typename T>
 typename std::enable_if<std::is_unsigned<T>::value, T>::type
 parse(const std::string& text) {
-    T type_min = std::numeric_limits<T>::min();
     T type_max = std::numeric_limits<T>::max();
 
     errno = 0; // Clear errno before conversion.
@@ -29,9 +28,9 @@ parse(const std::string& text) {
     // Make sure the text was a valid unsigned integer.
     if (errno == ERANGE || value > type_max) {
         throw std::runtime_error("Value passed to parse was too large.");
-    } else if (*end != '\0' || text.empty() || value < type_min) {
-        throw std::runtime_error("Value passed to parse was too small or "
-                                 "not a valid unsigned integer.");
+    } else if (*end != '\0' || text.empty()) {
+        throw std::runtime_error("Value passed to parse was not a valid "
+                                 "unsigned integer.");
     } else {
         return static_cast<T>(value);
     }
