@@ -1,6 +1,8 @@
 #ifndef COMMAND_LIST_PRIMES_H
 #define COMMAND_LIST_PRIMES_H
 
+#include <cinttypes>
+#include <cstdio>
 #include <iostream>
 #include <type_traits>
 #include <vector>
@@ -19,8 +21,10 @@ list_primes(T ceiling) {
     sieve_of_eratosthenes<T>(ceiling, primes);
 
     for (T i = 0; i < primes.size(); i++) {
-        // Use '\n' to avoid flushing stdout buffer and slowing down the loop.
-        std::cout << "Prime #" << (i + 1) << " = " << primes[i] << '\n';
+        // Use printf in loop to increase performance.
+        printf("Prime #%" PRIu64 " = %" PRIu64 "\n",
+               static_cast<uint64_t>((i + 1)),
+               static_cast<uint64_t>(primes[i]));
     }
 }
 
