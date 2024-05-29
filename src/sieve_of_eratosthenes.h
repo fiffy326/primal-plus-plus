@@ -1,6 +1,7 @@
 #ifndef SIEVE_OF_ERATOSTHENES_H
 #define SIEVE_OF_ERATOSTHENES_H
 
+#include <stdexcept>
 #include <type_traits>
 #include <vector>
 
@@ -15,6 +16,10 @@
 template <typename T>
 typename std::enable_if<std::is_unsigned<T>::value, void>::type
 sieve_of_eratosthenes(T ceiling, std::vector<T>& primes) {
+    if (ceiling == 0) {
+        throw std::runtime_error("Ceiling must be a positive integer.");
+    }
+
     // Prepare a primality vector to rule out multiples.
     std::vector<Primality> primality(ceiling + 1, Primality::PRIME);
 
