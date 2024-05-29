@@ -10,8 +10,7 @@
  * @param input String to parse
  * @return Parsed value
  */
-template <typename T>
-T parse(const std::string &input);
+template <typename T> T parse(const std::string &input);
 
 /**
  * Prompts the user for input then parses it.
