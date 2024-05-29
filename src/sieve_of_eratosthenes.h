@@ -1,25 +1,27 @@
-#ifndef PRIMAL_SIEVE_OF_ERATOSTHENES_H
-#define PRIMAL_SIEVE_OF_ERATOSTHENES_H
+#ifndef SIEVE_OF_ERATOSTHENES_H
+#define SIEVE_OF_ERATOSTHENES_H
 
-#include <iostream>
+#include <type_traits>
 #include <vector>
 
-#include "natural_number.h"
-#include "primality.h"
+#include "enum/primality.h"
 
 /**
- * Computes the prime numbers up to a ceiling using a Sieve of Eratosthenes.
- * @tparam T Natural number type
- * @param ceiling Ceiling to sieve up to
- * @param primes Primes found
+ * Computes the primes up to a given ceiling using a Sieve of Eratosthenes.
+ * @tparam T Unsigned integer type
+ * @param ceiling Largest number to check
+ * @param primes Vector of the primes found
  */
-template <typename T = NN64>
-void sieve_of_eratosthenes(T ceiling, std::vector<T> &primes) {
-    std::cout << "Sieving primes..." << std::endl;
-
+template <typename T>
+typename std::enable_if<std::is_unsigned<T>::value, void>::type
+sieve_of_eratosthenes(T ceiling, std::vector<T>& primes) {
+    // Prepare a primality vector to rule out multiples.
     std::vector<Primality> primality(ceiling + 1, Primality::PRIME);
+
+    // Mark 0 and 1 as neither prime nor composite.
     primality[0] = primality[1] = Primality::NEITHER;
 
+    // Mark multiples of numbers as composite.
     for (T number = 2; number * number <= ceiling; number++) {
         if (primality[number] == Primality::PRIME) {
             for (T i = number * number; i <= ceiling; i += number) {
@@ -27,6 +29,8 @@ void sieve_of_eratosthenes(T ceiling, std::vector<T> &primes) {
             }
         }
     }
+
+    // Fill the primes vector with the remaining numbers.
     for (T number = 2; number <= ceiling; number++) {
         if (primality[number] == Primality::PRIME) {
             primes.push_back(number);
@@ -34,4 +38,4 @@ void sieve_of_eratosthenes(T ceiling, std::vector<T> &primes) {
     }
 }
 
-#endif // PRIMAL_SIEVE_OF_ERATOSTHENES_H
+#endif // SIEVE_OF_ERATOSTHENES_H

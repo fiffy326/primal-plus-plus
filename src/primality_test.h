@@ -1,17 +1,19 @@
-#ifndef PRIMAL_PRIMALITY_TEST_H
-#define PRIMAL_PRIMALITY_TEST_H
+#ifndef PRIMALITY_TEST_H
+#define PRIMALITY_TEST_H
 
-#include "natural_number.h"
-#include "primality.h"
+#include <type_traits>
+
+#include "enum/primality.h"
 
 /**
- * Performs a primality test on a number.
- * @tparam T Natural number type
- * @param number Number to test
- * @return Result of primality test
+ * Performs a primality test on a number using trial division.
+ * @tparam T Unsigned integer type
+ * @param number Number to test for primality
+ * @return Primality enum of test outcome
  */
-template <typename T = NN64>
-Primality primality_test(T number) {
+template <typename T>
+typename std::enable_if<std::is_unsigned<T>::value, Primality>::type
+primality_test(T number) {
     if (number == 1) {
         return Primality::NEITHER;
     }
@@ -29,4 +31,4 @@ Primality primality_test(T number) {
     return Primality::PRIME;
 }
 
-#endif // PRIMAL_PRIMALITY_TEST_H
+#endif // PRIMALITY_TEST_H
