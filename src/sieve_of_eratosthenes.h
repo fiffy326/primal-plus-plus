@@ -14,10 +14,11 @@
  * @param primes Vector of the primes found
  */
 template <typename T>
-typename std::enable_if<std::is_unsigned<T>::value, void>::type
+typename std::enable_if_t<std::is_unsigned_v<T>, void>
 sieve_of_eratosthenes(T ceiling, std::vector<T>& primes) {
     if (ceiling == 0) {
-        throw std::runtime_error("Ceiling must be a positive integer.");
+        throw std::runtime_error("Ceiling passed to sieve_of_eratosthenes must"
+                                 " be a positive integer.");
     }
 
     // Prepare a primality vector to rule out multiples.

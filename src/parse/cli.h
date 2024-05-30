@@ -19,10 +19,10 @@ public:
     uint64_t getNumber();
 private:
     std::string program_name;
-    Command command;
-    uint64_t ceiling;
-    uint64_t index;
-    uint64_t number;
+    Command command = Command::INTERACTIVE;
+    uint64_t ceiling = 0;
+    uint64_t index = 0;
+    uint64_t number = 0;
 };
 
 /**

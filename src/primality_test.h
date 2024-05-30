@@ -12,7 +12,7 @@
  * @return Primality enum of test outcome
  */
 template <typename T>
-typename std::enable_if<std::is_unsigned<T>::value, Primality>::type
+typename std::enable_if_t<std::is_unsigned_v<T>, Primality>
 primality_test(T number) {
     if ((number == 0) || (number == 1)) {
         return Primality::NEITHER;

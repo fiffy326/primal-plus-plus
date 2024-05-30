@@ -14,8 +14,6 @@
  * @param argv Command line options
  */
 Cli::Cli(int argc, char** argv) {
-    command = Command::INTERACTIVE;
-    ceiling = index = number = 0;
     program_name = argv[0];
     int opt;
     while ((opt = getopt(argc, argv, "l:n:t:?")) != -1) {
